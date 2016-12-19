@@ -25,7 +25,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] Made the tip calculator website responsive by using Bootstrap!
+* [ ] Made the page responsive by using Bootstrap!
 
 ## Video Walkthrough
 
