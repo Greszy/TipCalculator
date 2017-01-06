@@ -7,7 +7,7 @@ Web Security Pre-work : Tip Calculator in PHP
 
 Submitted by: **Gregory Szymanski**
 
-Time spent: **30** hours spent in total
+Time spent: **40** hours spent in total
 
 ## User Stories
 
@@ -20,18 +20,21 @@ The following **required** functionality is complete:
 * [x] Submitted form values are retained when errors or results are shown.
 
 The following **optional** features are implemented:
-* [x] Add support for custom tip percentage
-* [x] Add support for splitting the tip and total
+* [x] Add support for custom tip percentage.
+* [x] Add support for splitting the tip and total.
 
 The following **additional** features are implemented:
-
-* [x] Made the page responsive by using Bootstrap!
+* [x] Add support for three locale specific currencies.
+* [x] Add a currency thousands separator.
+* [x] Store the last submission in a cookie or the session.
+* [x] Make the page responsive by using Bootstrap.
+* [x] Define custom functions to better organize the code.
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='TipCalcDemo.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='TipCalculatorDemo.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
