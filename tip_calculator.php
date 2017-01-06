@@ -34,7 +34,6 @@
 </head>
 
 <body>
-
     <div class="container">
         
             <div class="row">
@@ -60,9 +59,9 @@
                                     <option <?php if( strcmp($currency , "pound") == 0 ) {echo "selected";} ?> value="pound">£</option>
                                 </select>                          
                             </span>
-                            <div><input type="text" class="form-control input-sm" name="subtotalText" id="nameField" 
-                                   value="<?php if( $subTotalText > 0  ) { echo floatToFormatFloat($subTotalText, $currency ); 
-                                     } else if ( $default == 1) { echo floatToFormatFloat($subTotalDefault, $currencyDefault ); } else { echo ""; } ?>"/>
+                            <div><input type="text" class="form-control input-sm" name="subtotalText" id="nameField" <?php if(  $errSubTotal == 1 ) { echo 'style="color:red"';} ?>
+                              value="<?php if( $subTotalText > 0  ) { echo floatToFormatFloat($subTotalText, $currency ); 
+                                 } else if ( $default == 1) { echo floatToFormatFloat($subTotalDefault, $currencyDefault ); } else if( $errSubTotal == 1 ){ echo $errorSubTotalText; } ?>"/>
                            </div> 
                         </div>
 
@@ -73,18 +72,8 @@
                             </div>
                             <!--Start of radio buttons-->
                             <div class="col-xs-12 move">
-                                <label class="form-check-inline" <?php if( $errPercentage == 1 ) { echo 'style="color:red"';} ?> >
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio" value="10" 
-                                           <?php if( $inlineRadioOptionsValue == 10 || $default == 1) { echo "checked"; }?> > 10%
-                                </label>
-                                <label class="form-check-inline" <?php if( $errPercentage == 1 ) { echo 'style="color:red"';} ?> >
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio" value="15"
-                                           <?php if( $inlineRadioOptionsValue == 15 ) { echo "checked"; } ?> > 15%
-                                </label>
-                                <label class="form-check-inline" <?php if( $errPercentage == 1 ) { echo 'style="color:red"';} ?> >
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio" value="20"
-                                           <?php if( $inlineRadioOptionsValue== 20 ) { echo "checked"; } ?> > 20%
-                                </label><br/>
+                                <?php echo displayRadioButtons( $inlineRadioOptionsValue ) ?>;
+                                <br/>
                                                         
                                <label class="form-inline" <?php if(  $errorCustom == 1 ) { echo 'style="color:red"';} ?> >
                                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio" value="100"
@@ -93,7 +82,7 @@
                                 <!--Start of text input custom percentage area-->
                                     <input type="text"  style ="width:75px;" name="customText" id="nameField" 
                                         value="<?php if( $inlineRadioOptionsValue == 100 && $customText > 0  ) { echo floatToFormatFloat($customText, $currency );  
-                                          } else { echo ""; } ?>"/> %
+                                          } else  if(  $errorCustom == 1 ) { echo $errorCustText; } ?>"/> %
                              
                                 </label><br/>
                                <!--End of text input custom percentage area-->
@@ -103,7 +92,7 @@
                                 
                                      <input type="text"  style ="width:75px;" name="splitText" id="nameField" 
                                          value="<?php if( $splitText > 0  ) { echo numberToFormatNumber( $splitText, $currency );  
-                                          } else if ( $default == 1) { echo $splitDefault; } else { echo ""; } ?>"/> person(s)
+                                          } else if ( $default == 1) { echo $splitDefault; } else if(  $errorSplit == 1 ){ echo $errorSplitText; } ?>"/> person(s)
                              
                                 </label><br/>
 

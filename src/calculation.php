@@ -1,9 +1,10 @@
 <?php 
     
     // default values - Subtotal , Split , Currency
-    $subTotalDefault = "100.00";
-    $splitDefault = "1";
-    $currencyDefault = "dollar";
+    $subTotalDefault = '100.00';
+    $splitDefault = '1';
+    $currencyDefault = 'dollar';
+    $percentageDefault = '10';
     
     // error handling variables
     $errSubTotal = 0;
@@ -18,6 +19,7 @@
     if(!isset($_COOKIE["default"])) {
         setcookie("default", "0");
         $default = 1; 
+        $inlineRadioOptionsValue = $percentageDefault;
      } else { 
         $default = $_COOKIE["default"];
      }
@@ -33,11 +35,11 @@
    // convert formated float to float number ( remove seperator and set decimal point as "."
    function formatFloatToFloat( $curValue) {
        // dollar, pound currency notation to number
-       if ( preg_match( "/^([1-9]{1,3})+(\,[0-9]{3})+(\.[0-9]{2})?$/", $curValue )) {
+       if ( preg_match( "/^([0-9]{1,3})+(\,[0-9]{3})+(\.[0-9]{2})?$/", $curValue )) {
            return preg_replace('/,/', '', $curValue);
        } 
        // euro currency notation to number   
-       if ( preg_match( "/^([1-9]{1,3})+(\.[0-9]{3})+(\,[0-9]{2})?$/", $curValue )) {
+       if ( preg_match( "/^([0-9]{1,3})+(\.[0-9]{3})+(\,[0-9]{2})?$/", $curValue )) {
            $temp = preg_replace('/\./', '', $curValue);
            return  preg_replace('/,/', '.', $temp);
        } else if (preg_match( "/^\d{1,10}(\,\d{1,2})?$/", $curValue )){
@@ -100,7 +102,24 @@
                return "$";    
       }
    }
-       // if default = 0 validate the values to displaye no-default page 
+
+     //  radio button display
+     function displayRadioButtons( $inlineRadioOptionsValue ) {
+          $choices = array('10', '15', '20');
+          $length = sizeof( $choices );
+          $output = '';
+          for($i=0; $i<$length; $i++ ) { 
+              $output = $output.'<label class="form-check-inline"  >';
+              $output = $output.'<input class="form-check-input" type="radio" name="inlineRadioOptions" ';
+              $output = $output.'id="inlineRadio" value="'.$choices[$i].'" ';
+              if(  $inlineRadioOptionsValue == $choices[$i] )  { $output = $output.'checked';}
+              $output = $output.' >'.$choices[$i].'%'; 
+              $output = $output.'</label>'; 
+          }
+          return $output;
+     }     
+      
+       // if default = 0 validate the values to display no-default page 
        // else default = 1 displayed the page including default values                
        if ( $default == 0) {  
                             
@@ -112,15 +131,18 @@
                     $subTotalText = $subTotalValue;
                     $errSubTotal = 0; 
                 } else {
-                    $subTotalText = 0;
+                    $subTotalText = 0;;
                     $subTotalValue = 0;            
                     $errSubTotal = 1; 
+                    $errorSubTotalText = $_POST["subtotalText"];
                 }
 
             } else {
                 $subTotalText = 0;
                 $subTotalValue = 0; 
-                $errSubTotal = 1; 
+                $errSubTotal = 1;
+                $errorSubTotalText = "";
+                 
             } 
             
             // Validation the percentage
@@ -141,9 +163,10 @@
                     $customText = 0;
                     $percentageValue = 0;
                     $errorCustom = 1;
+                    $errorCustText = $_POST["customText"];
                 }
             } 
-                
+             
               // Validation the split
               if(isset($_POST["splitText"])) {
                  // remove ',' separator form fomated number
@@ -156,11 +179,13 @@
                     $splitText = 0;
                     $splitValue = 0;
                     $errorSplit = 1;
+                    $errorSplitText = $_POST["splitText"];
                  }
              } else {
                  $splitText = 0;
                  $splitValue = 0;
                  $errorSplit = 1;
+                 $errorSplitText = "";
              }  
    
              // Proccesing the bill
@@ -210,5 +235,5 @@
                }        
            } 
        } 
-      
-    ?>
+     
+   ?>
